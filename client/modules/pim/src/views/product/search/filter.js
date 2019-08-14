@@ -31,6 +31,10 @@ Espo.define('pim:views/product/search/filter', 'views/search/filter', function (
 
             if (type) {
                 let viewName = this.model.getFieldParam(name, 'view') || this.getFieldManager().getViewName(type);
+                if (['varcharMultiLang', 'textMultiLang', 'enumMultiLang', 'multiEnumMultiLang', 'arrayMultiLang', 'wysiwygMultiLang'].includes(type)) {
+                    type = this.getMetadata().get(['fields', type, 'defaultFieldType']);
+                    viewName = this.getFieldManager().getViewName(type);
+                }
 
                 let params = {};
                 if (this.options.params.isTypeValue) {
